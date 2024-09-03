@@ -21,6 +21,11 @@ inputs:
     description: The token to use to login to GHCR
     required: true
 
+outputs:
+  tags:
+    description: The tags that were pushed to the registry
+    value: ${{ steps.meta.outputs.tags }}
+
 runs:
   using: composite
   steps:
@@ -62,7 +67,7 @@ runs:
         password: ${{ inputs.ghcr_token }}
     -
       name: Build and push
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         context: ${{ inputs.docker_context }}
         file: ${{ inputs.docker_file }}
